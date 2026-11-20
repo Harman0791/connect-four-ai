@@ -38,6 +38,11 @@ class Board:
     def is_full(self):
         return not self.valid_moves()
 
+    def copy(self):
+        new_board = Board()
+        new_board.grid = [row[:] for row in self.grid]
+        return new_board
+    
     def __str__(self):
         return "\n".join(
             " ".join(SYMBOLS[cell] for cell in row) for row in self.grid
