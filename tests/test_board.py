@@ -100,3 +100,12 @@ def test_filled_board_is_full():
         for col in range(COLS):
             board.grid[row][col] = 1
     assert board.is_full()
+
+def test_board_prints_pieces_as_symbols():
+    board = Board()
+    board.drop_piece(0, 1)
+    board.drop_piece(1, 2)
+    lines = str(board).splitlines()
+    assert len(lines) == ROWS
+    assert lines[0] == ". . . . . . ."
+    assert lines[-1] == "X O . . . . ."

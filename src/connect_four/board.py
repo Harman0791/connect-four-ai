@@ -1,6 +1,7 @@
 ROWS = 6
 COLS = 7
 EMPTY = 0
+SYMBOLS = {EMPTY: ".", 1: "X", 2: "O"}
 
 class Board:
     def __init__(self):
@@ -36,3 +37,8 @@ class Board:
 
     def is_full(self):
         return not self.valid_moves()
+
+    def __str__(self):
+        return "\n".join(
+            " ".join(SYMBOLS[cell] for cell in row) for row in self.grid
+        )
