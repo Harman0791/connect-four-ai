@@ -53,3 +53,50 @@ def test_valid_moves_excludes_full_columns():
     for _ in range(ROWS):
         board.drop_piece(2, 1)
     assert 2 not in board.valid_moves()
+
+def test_horizontal_win():
+    board = Board()
+    for col in range(4):
+        board.drop_piece(col, 1)
+    assert board.is_winner(1)
+    assert not board.is_winner(2)
+
+
+def test_vertical_win():
+    board = Board()
+    for _ in range(4):
+        board.drop_piece(0, 2)
+    assert board.is_winner(2)
+
+
+def test_diagonal_down_right_win():
+    board = Board()
+    for i in range(4):
+        board.grid[2 + i][0 + i] = 1
+    assert board.is_winner(1)
+
+
+def test_diagonal_down_left_win():
+    board = Board()
+    for i in range(4):
+        board.grid[2 + i][3 - i] = 1
+    assert board.is_winner(1)
+
+
+def test_three_in_a_row_is_not_a_win():
+    board = Board()
+    for col in range(3):
+        board.drop_piece(col, 1)
+    assert not board.is_winner(1)
+
+
+def test_empty_board_is_not_full():
+    assert not Board().is_full()
+
+
+def test_filled_board_is_full():
+    board = Board()
+    for row in range(ROWS):
+        for col in range(COLS):
+            board.grid[row][col] = 1
+    assert board.is_full()

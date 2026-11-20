@@ -17,3 +17,22 @@ class Board:
 
     def valid_moves(self):
         return [col for col in range(COLS) if self.grid[0][col] == EMPTY]
+
+    def is_winner(self, player):
+        directions = [(0, 1), (1, 0), (1, 1), (1, -1)]
+        for row in range(ROWS):
+            for col in range(COLS):
+                for d_row, d_col in directions:
+                    end_row = row + 3 * d_row
+                    end_col = col + 3 * d_col
+                    if not (0 <= end_row < ROWS and 0 <= end_col < COLS):
+                        continue
+                    if all(
+                        self.grid[row + i * d_row][col + i * d_col] == player
+                        for i in range(4)
+                    ):
+                        return True
+        return False
+
+    def is_full(self):
+        return not self.valid_moves()
