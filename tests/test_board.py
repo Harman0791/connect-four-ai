@@ -109,3 +109,11 @@ def test_board_prints_pieces_as_symbols():
     assert len(lines) == ROWS
     assert lines[0] == ". . . . . . ."
     assert lines[-1] == "X O . . . . ."
+    
+def test_copy_is_independent():
+    board = Board()
+    board.drop_piece(0, 1)
+    copy = board.copy()
+    copy.drop_piece(0, 2)
+    assert board.grid[ROWS - 2][0] == EMPTY
+    assert copy.grid[ROWS - 2][0] == 2

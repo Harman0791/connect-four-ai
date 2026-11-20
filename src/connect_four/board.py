@@ -42,3 +42,8 @@ class Board:
         return "\n".join(
             " ".join(SYMBOLS[cell] for cell in row) for row in self.grid
         )
+    
+    def copy(self):
+        new_board = Board()
+        new_board.grid = [row[:] for row in self.grid]
+        return new_board

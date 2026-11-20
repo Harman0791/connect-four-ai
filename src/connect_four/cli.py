@@ -1,3 +1,4 @@
+from connect_four.agents import HeuristicAgent
 from connect_four.board import Board, COLS
 
 
@@ -16,12 +17,16 @@ def ask_for_column(player):
             print("Please type a number.")
 
 
-def play():
+def play(opponent=None):
     board = Board()
     player = 1
     while True:
         show(board)
-        col = ask_for_column(player)
+        if player == 2 and opponent is not None:
+            col = opponent.choose_move(board, player)
+            print(f"{opponent.name} plays column {col + 1}")
+        else:
+            col = ask_for_column(player)
         try:
             board.drop_piece(col, player)
         except ValueError:
@@ -39,4 +44,5 @@ def play():
 
 
 if __name__ == "__main__":
-    play()
+    answer = input("Play against the computer? (y/n): ").strip().lower()
+    play(HeuristicAgent() if answer == "y" else None)
